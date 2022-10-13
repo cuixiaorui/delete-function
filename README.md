@@ -1,4 +1,4 @@
-# Delete-Function 
+# [Delete-Function](https://marketplace.visualstudio.com/items?itemName=cuixiaorui.delete-function)
 
 quick delete function that support javascript and typescript
 
@@ -12,16 +12,13 @@ quick delete function that support javascript and typescript
 
 1. Through the Command Palette. 
 
-![](./usage02.png)
-
+![](https://images-1252602850.cos.ap-beijing.myqcloud.com/20221013222755.png)
 
 2. Through the shortcut
 
 - default shortcut 
   - mac "cmd + r + f"
   - win "ctrl + r + f"
-
-![](./usage.gif)
 
 ## With [Vim](https://github.com/VSCodeVim/Vim)
 

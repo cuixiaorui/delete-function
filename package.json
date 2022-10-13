@@ -2,10 +2,25 @@
   "name": "delete-function",
   "displayName": "Delete Function",
   "description": "quick delete function",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "publisher": "cuixiaorui",
   "engines": {
     "vscode": "^1.72.0"
   },
+  "author": "阿崔cxr <cui_xiaorui@126.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cuixiaorui/delete-function.git"
+  },
+  "homepage": "https://github.com/cuixiaorui/delete-function",
+  "bugs": "https://github.com/cuixiaorui/delete-function/issues",
+  "keywords": [
+    "refactor",
+    "javascript",
+    "typescript",
+    "delete function"
+  ],
   "categories": [
     "Other"
   ],
@@ -31,8 +46,8 @@
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "tsc",
+    "watch": "tsc -watch -p ./src",
     "pretest": "pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
