@@ -1,0 +1,60 @@
+{
+  "name": "delete-function",
+  "displayName": "Delete Function",
+  "description": "quick delete function",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.72.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:delete-function.deleteFunction"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "delete-function.deleteFunction",
+        "category": "DeleteFunction",
+        "title": "Delete Function"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "delete-function.deleteFunction",
+        "key": "ctrl+R F",
+        "mac": "cmd+R F"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "test:unit": "vitest --run"
+  },
+  "devDependencies": {
+    "@types/babel__traverse": "^7.18.2",
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.72.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "typescript": "^4.7.4",
+    "vitest": "^0.24.1"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.19.4",
+    "@babel/traverse": "^7.19.4"
+  }
+}
