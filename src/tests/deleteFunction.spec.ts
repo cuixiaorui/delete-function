@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { getDeleteFunctionNode } from "./deleteFunction";
+import { describe, it, expect, test } from "vitest";
+import { getDeleteFunctionNode } from "../deleteFunction";
 
 describe("FunctionDeclaration", () => {
   it("should delete function at offset Position", () => {
