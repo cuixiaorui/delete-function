@@ -42,5 +42,7 @@ you can config follow above
 
 replace 'before' to you want 
 
-
+## Todo
+- [ ] 删除 class 中的方法
+- [ ] 重构代码
 

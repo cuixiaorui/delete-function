@@ -1,8 +1,7 @@
-import { parse } from "@babel/parser";
 import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import { FunctionDeclaration } from "@babel/types";
-import { BABEL_PARSER_OPTIONS } from "./paserOptions";
+import { parse } from "./parse";
 
 interface Node {
   name: string;
@@ -25,9 +24,10 @@ export function getDeleteFunctionNode(
   point: number,
   documentText: string
 ): Node | undefined {
-  const ast = parse(documentText, BABEL_PARSER_OPTIONS);
-
   let node;
+
+  const ast = parse(documentText);
+
   traverse(ast, {
     FunctionDeclaration: handleFunctionDeclaration,
     FunctionExpression: hanldeFunctionExpression,
@@ -35,6 +35,7 @@ export function getDeleteFunctionNode(
   });
 
   function handleFunctionDeclaration(path: NodePath<FunctionDeclaration>) {
+    console.log(path.node);
     if (isContainPoint(path.node, point)) {
       node = createNodeWithFunctionDeclaration(path.node);
     }

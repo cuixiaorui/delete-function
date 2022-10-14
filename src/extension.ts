@@ -1,9 +1,14 @@
 import * as vscode from "vscode";
 import { getDeleteFunctionNode } from "./deleteFunction";
+import { VuePareser } from "./VueParser";
 
 export function activate(context: vscode.ExtensionContext) {
   const commandId = "delete-function.deleteFunction";
-  let disposable = vscode.commands.registerCommand(commandId, deleteFunction);
+  const disposable = vscode.commands.registerCommand(commandId, () => {
+    try {
+      deleteFunction();
+    } catch (e) {}
+  });
 
   context.subscriptions.push(disposable);
 }
@@ -14,8 +19,19 @@ function deleteFunction() {
   if (editor) {
     let curPos = editor.selection.active;
     let offset = editor.document.offsetAt(curPos);
+    const languageType = vscode.window.activeTextEditor?.document.languageId;
 
-    const node = getDeleteFunctionNode(offset, editor.document.getText());
+    if (!languageType) {
+      return;
+    }
+
+    const getDeleteFunctionNodeHandler =
+      createGetDeleteFunctionNodeHandler(languageType);
+    const node = getDeleteFunctionNodeHandler(
+      offset,
+      editor.document.getText()
+    );
+
     if (!node) {
       return;
     }
@@ -28,5 +44,14 @@ function deleteFunction() {
         )
       );
     });
+  }
+}
+
+function createGetDeleteFunctionNodeHandler(type: string) {
+  if (type === "vue") {
+    const parser = new VuePareser();
+    return parser.getDeleteFunctionNode.bind(parser);
+  } else {
+    return getDeleteFunctionNode;
   }
 }

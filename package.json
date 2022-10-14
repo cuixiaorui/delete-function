@@ -2,7 +2,7 @@
   "name": "delete-function",
   "displayName": "Delete Function",
   "description": "quick delete function",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "publisher": "cuixiaorui",
   "engines": {
     "vscode": "^1.72.0"
@@ -47,7 +47,7 @@
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
     "compile": "tsc",
-    "watch": "tsc -watch -p ./src",
+    "watch": "tsc -watch",
     "pretest": "pnpm run compile && pnpm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
@@ -70,6 +70,7 @@
   },
   "dependencies": {
     "@babel/parser": "^7.19.4",
-    "@babel/traverse": "^7.19.4"
+    "@babel/traverse": "^7.19.4",
+    "@vue/compiler-sfc": "^3.2.40"
   }
 }
