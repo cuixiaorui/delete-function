@@ -1,6 +1,11 @@
 import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
-import { FunctionDeclaration } from "@babel/types";
+import {
+  FunctionDeclaration,
+  ClassMethod,
+  Identifier,
+  ExportNamedDeclaration,
+} from "@babel/types";
 import { parse } from "../parse";
 
 interface Node {
@@ -18,24 +23,25 @@ interface Node {
 }
 
 /**
- * return function node by point on documentText
+ * return function node by index on documentText
  */
 export function getDeleteFunctionNodeJs(
-  point: number,
-  documentText: string
+  index: number,
+  code: string
 ): Node | undefined {
   let node;
 
-  const ast = parse(documentText);
+  const ast = parse(code);
 
   traverse(ast, {
     FunctionDeclaration: handleFunctionDeclaration,
     FunctionExpression: hanldeFunctionExpression,
     ArrowFunctionExpression: hanldeFunctionExpression,
+    ClassMethod: handleClassMethod,
   });
 
   function handleFunctionDeclaration(path: NodePath<FunctionDeclaration>) {
-    if (isContainPoint(path.node, point)) {
+    if (isContain(path.node, index)) {
       node = createNodeWithFunctionDeclaration(path.node);
     }
   }
@@ -45,7 +51,7 @@ export function getDeleteFunctionNodeJs(
       path.parentPath.node.type === "VariableDeclarator" &&
       path.parentPath.parentPath.node.type === "VariableDeclaration"
     ) {
-      if (isContainPoint(path.parentPath.parentPath.node, point)) {
+      if (isContain(path.parentPath.parentPath.node, index)) {
         node = createNodeWithVariableDeclarator(
           path.parentPath.parentPath.node,
           path.parentPath.node
@@ -54,12 +60,23 @@ export function getDeleteFunctionNodeJs(
     }
   }
 
+  function handleClassMethod(path) {
+    node = createNodeWithClassMethod(path.node);
+  }
+
   return node;
 }
 
+function createNodeWithClassMethod(node: ClassMethod) {
+  return {
+    name: (node.key as Identifier).name,
+    start: { ...node.loc!.start },
+    end: { ...node.loc!.end },
+  };
+}
 
-function isContainPoint(node, point: number) {
-  return point >= node.start && point <= node.end;
+function isContain(node, index: number) {
+  return index >= node.start && index <= node.end;
 }
 
 function createNodeWithVariableDeclarator(
@@ -73,6 +90,14 @@ function createNodeWithVariableDeclarator(
   };
 }
 
+function createNodeWithExportNamedDeclaration(node: any): Node {
+  return {
+    name: node.declaration.id.name,
+    start: { ...node.loc.start },
+    end: { ...node.loc.end },
+  };
+}
+
 function createNodeWithFunctionDeclaration(functionDeclarationNode): Node {
   return {
     name: functionDeclarationNode.id.loc.identifierName,
@@ -80,3 +105,5 @@ function createNodeWithFunctionDeclaration(functionDeclarationNode): Node {
     end: { ...functionDeclarationNode.loc.end },
   };
 }
+
+

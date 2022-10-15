@@ -1,16 +1,16 @@
 import { describe, it, expect } from "vitest";
 import { getDeleteFunctionNodeJs } from "../handlers/handleJs";
 describe("handle ts", () => {
-  it("should delete function at offset Position", () => {
-    let offset = 20;
+  it("should delete function at index Position", () => {
+    let index = 20;
 
-    const documentText = `
+    const code = `
     function getName ():string {
         return 'name'
     }
     `;
 
-    const node = getDeleteFunctionNodeJs(offset, documentText);
+    const node = getDeleteFunctionNodeJs(index, code);
 
     expect(node).toEqual({
       name: "getName",
