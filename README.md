@@ -43,6 +43,5 @@ you can config follow above
 replace 'before' to you want 
 
 ## Todo
-- [ ] 删除 class 中的方法
 - [ ] 前面有 export 或者是 export default
 
