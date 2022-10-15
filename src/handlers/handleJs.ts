@@ -1,7 +1,7 @@
 import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
 import { FunctionDeclaration } from "@babel/types";
-import { parse } from "./parse";
+import { parse } from "../parse";
 
 interface Node {
   name: string;
@@ -20,7 +20,7 @@ interface Node {
 /**
  * return function node by point on documentText
  */
-export function getDeleteFunctionNode(
+export function getDeleteFunctionNodeJs(
   point: number,
   documentText: string
 ): Node | undefined {
@@ -35,7 +35,6 @@ export function getDeleteFunctionNode(
   });
 
   function handleFunctionDeclaration(path: NodePath<FunctionDeclaration>) {
-    console.log(path.node);
     if (isContainPoint(path.node, point)) {
       node = createNodeWithFunctionDeclaration(path.node);
     }
@@ -57,6 +56,7 @@ export function getDeleteFunctionNode(
 
   return node;
 }
+
 
 function isContainPoint(node, point: number) {
   return point >= node.start && point <= node.end;

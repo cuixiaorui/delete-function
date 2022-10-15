@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { VuePareser } from "../VueParser";
+import { getDeleteFunctionNodeVue } from "../handlers/handleVue";
 
-describe("vueParser", () => {
+describe("handle vue", () => {
   it("setup", () => {
     const code = `<template>
 <div>vue</div>
@@ -16,10 +16,9 @@ function getName() {
 
 <style></style>
 	`;
-    const parser = new VuePareser();
 
     const index = 54;
-    const node = parser.getDeleteFunctionNode(index, code);
+    const node = getDeleteFunctionNodeVue(index, code);
 
     expect(node).toEqual({
       name: "getName",
@@ -62,10 +61,9 @@ export default defineComponent({
 </style>
 `;
 
-    const parser = new VuePareser();
 
     const index = 50 + 87;
-    const node = parser.getDeleteFunctionNode(index, code);
+    const node = getDeleteFunctionNodeVue(index, code);
 
     expect(node).toEqual({
       name: "setName",
@@ -88,10 +86,8 @@ export default defineComponent({
 </template>
 `;
 
-    const parser = new VuePareser();
-
     const index = 10;
-    const node = parser.getDeleteFunctionNode(index, code);
+    const node = getDeleteFunctionNodeVue(index, code);
 
     expect(node).toBeFalsy();
   });

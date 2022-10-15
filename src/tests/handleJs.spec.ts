@@ -1,7 +1,7 @@
-import { describe, it, expect, test } from "vitest";
-import { getDeleteFunctionNode } from "../deleteFunction";
+import { describe, it, expect } from "vitest";
+import { getDeleteFunctionNodeJs } from "../handlers/handleJs";
 
-describe("FunctionDeclaration", () => {
+describe("handle js", () => {
   it("should delete function at offset Position", () => {
     // getName
     let offset = 29;
@@ -16,7 +16,7 @@ describe("FunctionDeclaration", () => {
     }
     `;
 
-    const node = getDeleteFunctionNode(offset, documentText);
+    const node = getDeleteFunctionNodeJs(offset, documentText);
 
     expect(node).toEqual({
       name: "getName",
@@ -36,7 +36,7 @@ describe("FunctionDeclaration", () => {
     // setName
     offset = 83;
 
-    const updatedNode = getDeleteFunctionNode(offset, documentText);
+    const updatedNode = getDeleteFunctionNodeJs(offset, documentText);
 
     expect(updatedNode).toEqual({
       name: "setName",
@@ -66,7 +66,7 @@ describe("FunctionDeclaration", () => {
     }
     `;
 
-      const node = getDeleteFunctionNode(offset, documentText);
+      const node = getDeleteFunctionNodeJs(offset, documentText);
 
       expect(node).toEqual({
         name: "getName",
@@ -95,7 +95,7 @@ describe("FunctionDeclaration", () => {
     }
     `;
 
-      const node = getDeleteFunctionNode(offset, documentText);
+      const node = getDeleteFunctionNodeJs(offset, documentText);
 
       expect(node).toEqual({
         name: "heihei",
@@ -129,7 +129,7 @@ describe("FunctionExpression", () => {
     }
     `;
 
-    const node = getDeleteFunctionNode(offset, documentText);
+    const node = getDeleteFunctionNodeJs(offset, documentText);
 
     expect(node).toEqual({
       name: "getName",
@@ -148,7 +148,7 @@ describe("FunctionExpression", () => {
     // update offset
     // setName
     offset = 91;
-    const updatedNode = getDeleteFunctionNode(offset, documentText);
+    const updatedNode = getDeleteFunctionNodeJs(offset, documentText);
 
     expect(updatedNode).toEqual({
       name: "setName",
@@ -181,7 +181,7 @@ describe("FunctionExpression", () => {
     }
     `;
 
-      const node = getDeleteFunctionNode(offset, documentText);
+      const node = getDeleteFunctionNodeJs(offset, documentText);
 
       expect(node).toEqual({
         name: "getName",
@@ -213,7 +213,7 @@ describe("FunctionExpression", () => {
     }
     `;
 
-      const node = getDeleteFunctionNode(offset, documentText);
+      const node = getDeleteFunctionNodeJs(offset, documentText);
 
       expect(node).toEqual({
         name: "setName",
@@ -244,7 +244,7 @@ describe("ArrowFunctionExpression", () => {
     `;
 
     // 应该返回的是 getName
-    const node = getDeleteFunctionNode(offset, documentText);
+    const node = getDeleteFunctionNodeJs(offset, documentText);
 
     expect(node).toEqual({
       name: "getName",
@@ -264,7 +264,7 @@ describe("ArrowFunctionExpression", () => {
     // setName
     offset = 61;
 
-    const updatedNode = getDeleteFunctionNode(offset, documentText);
+    const updatedNode = getDeleteFunctionNodeJs(offset, documentText);
 
     expect(updatedNode).toEqual({
       name: "setName",
@@ -294,7 +294,7 @@ describe("ArrowFunctionExpression", () => {
     };
     `;
 
-      const node = getDeleteFunctionNode(offset, documentText);
+      const node = getDeleteFunctionNodeJs(offset, documentText);
 
       expect(node).toEqual({
         name: "getName",
@@ -323,7 +323,7 @@ describe("ArrowFunctionExpression", () => {
     };
     `;
 
-      const node = getDeleteFunctionNode(offset, documentText);
+      const node = getDeleteFunctionNodeJs(offset, documentText);
 
       expect(node).toEqual({
         name: "setName",
