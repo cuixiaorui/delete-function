@@ -550,3 +550,100 @@ it("export arrowFunctionExpression function and export FunctionDeclaration  ", (
     },
   });
 });
+
+describe("object property", () => {
+  it("arrowFunctionExpression", () => {
+    const code = `
+    const user = {
+      setNameA:()=>"heihei",
+      setNameB:function(){},
+    };
+    `;
+
+    let index = 26;
+    let node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "setNameA",
+      start: {
+        line: 3,
+        column: 6,
+        index: 26,
+      },
+      end: {
+        line: 3,
+        column: 27,
+        index: 47,
+      },
+    });
+
+    // update index to setNameB
+    index = 55;
+    node = getDeleteFunctionNodeJs(index, code);
+    expect(node).toEqual({
+      name: "setNameB",
+      start: {
+        line: 4,
+        column: 6,
+        index: 55,
+      },
+      end: {
+        line: 4,
+        column: 27,
+        index: 76,
+      },
+    });
+  });
+
+  it("object method", () => {
+    const code = `
+    const user = {
+      getName(){},
+    };
+    `;
+
+    const index = 26;
+    const node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "getName",
+      start: {
+        column: 6,
+        index: 26,
+        line: 3,
+      },
+      end: {
+        column: 17,
+        index: 37,
+        line: 3,
+      },
+    });
+  });
+
+  it("object method and arrowFunctionExpression", () => {
+    const code = `
+    const user = {
+      setNameA: () => 'heihei',
+      setNameB () {},
+      name:"heihei"
+    }
+    `;
+
+    const index = 26;
+    const node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "setNameA",
+      start: {
+        line: 3,
+        column: 6,
+        index: 26,
+      },
+      end: {
+        line: 3,
+        column: 30,
+        index: 50,
+      },
+    });
+  });
+});

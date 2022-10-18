@@ -1,10 +1,6 @@
 import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
-import {
-  FunctionDeclaration,
-  ClassMethod,
-  Identifier,
-} from "@babel/types";
+import { FunctionDeclaration, ClassMethod, Identifier } from "@babel/types";
 import { parse } from "../parse";
 
 interface Node {
@@ -37,6 +33,7 @@ export function getDeleteFunctionNodeJs(
     FunctionExpression: hanldeFunctionExpression,
     ArrowFunctionExpression: hanldeFunctionExpression,
     ClassMethod: handleClassMethod,
+    ObjectMethod: handleObjectMethod,
   });
 
   function handleFunctionDeclaration(path: NodePath<FunctionDeclaration>) {
@@ -71,6 +68,14 @@ export function getDeleteFunctionNodeJs(
       path.parentPath.parentPath.parentPath.isExportNamedDeclaration()
     ) {
       handleExportNamedDeclaration();
+    } else if (path.parentPath.isObjectProperty()) {
+      if (isContain(path.parentPath.node, index)) {
+        node = {
+          name: path.parentPath.node.key.name,
+          start: { ...path.parentPath.node.loc.start },
+          end: { ...path.parentPath.node.loc.end },
+        };
+      }
     } else {
       if (
         path.parentPath.node.type === "VariableDeclarator" &&
@@ -116,6 +121,16 @@ export function getDeleteFunctionNodeJs(
 
   function handleClassMethod(path) {
     node = createNodeWithClassMethod(path.node);
+  }
+
+  function handleObjectMethod(path) {
+    if (isContain(path.node, index)) {
+      node = {
+        name: path.node.key.name,
+        start: { ...path.node.loc.start },
+        end: { ...path.node.loc.end },
+      };
+    }
   }
 
   return node;
