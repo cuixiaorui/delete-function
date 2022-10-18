@@ -53,7 +53,7 @@ describe("FunctionDeclaration", () => {
     });
   });
 
-  it.todo("export function", () => {
+  it("export function", () => {
     let index = 37;
 
     const code = `
@@ -80,9 +80,7 @@ describe("FunctionDeclaration", () => {
     });
   });
 
-
-
-  it.todo("export default function", () => {
+  it("export default function", () => {
     let index = 37;
 
     const code = `
@@ -95,7 +93,7 @@ describe("FunctionDeclaration", () => {
     const node = getDeleteFunctionNodeJs(index, code);
 
     expect(node).toEqual({
-      name: "getName",
+      name: "",
       start: {
         line: 3,
         column: 4,
@@ -286,6 +284,60 @@ describe("FunctionExpression", () => {
       });
     });
   });
+
+  it("export function", () => {
+    let index = 37;
+
+    const code = `
+    const name = "cxr";
+    export const getName = function () {
+        return 'name'
+    }
+    `;
+
+    const node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "getName",
+      start: {
+        line: 3,
+        column: 4,
+        index: 29,
+      },
+      end: {
+        line: 5,
+        column: 5,
+        index: 93,
+      },
+    });
+  });
+
+  it("export default function", () => {
+    let index = 37;
+
+    const code = `
+    const name = "cxr";
+    export default function () {
+        return 'name'
+    }
+    `;
+
+    const node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "",
+      start: {
+        line: 3,
+        column: 4,
+        index: 29,
+      },
+      end: {
+        line: 5,
+        column: 5,
+        index: 85,
+      },
+    });
+  });
 });
 
 describe("ArrowFunctionExpression", () => {
@@ -333,6 +385,54 @@ describe("ArrowFunctionExpression", () => {
         line: 4,
         column: 31,
         index: 88,
+      },
+    });
+  });
+
+  it("export function", () => {
+    let index = 37;
+
+    const code = `
+    const name = "cxr";
+    export const getName = ()=>"heihei"`;
+
+    const node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "getName",
+      start: {
+        line: 3,
+        column: 4,
+        index: 29,
+      },
+      end: {
+        column: 39,
+        index: 64,
+        line: 3,
+      },
+    });
+  });
+
+  it("export default function", () => {
+    let index = 37;
+
+    const code = `
+    const name = "cxr";
+    export default ()=> 'heihei'`;
+
+    const node = getDeleteFunctionNodeJs(index, code);
+
+    expect(node).toEqual({
+      name: "",
+      start: {
+        line: 3,
+        column: 4,
+        index: 29,
+      },
+      end: {
+        column: 32,
+        index: 57,
+        line: 3,
       },
     });
   });
@@ -420,6 +520,33 @@ test("Class Method", () => {
       column: 5,
       index: 54,
       line: 5,
+    },
+  });
+});
+
+it("export arrowFunctionExpression function and export FunctionDeclaration  ", () => {
+  let index = 37;
+
+  const code = `
+  export const getName = () => 'heihei';
+  export const getNameA = function () {
+    console.log('getNameA');
+  };
+  `;
+
+  const node = getDeleteFunctionNodeJs(index, code);
+
+  expect(node).toEqual({
+    name: "getName",
+    start: {
+      column: 2,
+      index: 3,
+      line: 2,
+    },
+    end: {
+      column: 40,
+      index: 41,
+      line: 2,
     },
   });
 });

@@ -41,7 +41,3 @@ quick delete function that support javascript and typescript
 you can config follow above
 
 replace 'before' to you want 
-
-## Todo
-- [ ] 前面有 export 或者是 export default
-

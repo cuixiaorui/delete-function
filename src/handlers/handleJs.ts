@@ -4,7 +4,6 @@ import {
   FunctionDeclaration,
   ClassMethod,
   Identifier,
-  ExportNamedDeclaration,
 } from "@babel/types";
 import { parse } from "../parse";
 
@@ -41,16 +40,71 @@ export function getDeleteFunctionNodeJs(
   });
 
   function handleFunctionDeclaration(path: NodePath<FunctionDeclaration>) {
-    if (isContain(path.node, index)) {
-      node = createNodeWithFunctionDeclaration(path.node);
+    if (
+      path.parentPath.isExportNamedDeclaration() ||
+      path.parentPath.isExportDefaultDeclaration()
+    ) {
+      handleExportDeclaration();
+    } else {
+      if (isContain(path.node, index)) {
+        node = createNodeWithFunctionDeclaration(path.node);
+      }
+    }
+
+    function handleExportDeclaration() {
+      if (isContain(path.parentPath.node, index)) {
+        node = {
+          name: (path as any).parentPath.isExportDefaultDeclaration()
+            ? ""
+            : (path as any).parentPath.node.declaration.id.name,
+          start: { ...(path as any).parentPath.node.loc.start },
+          end: { ...(path as any).parentPath.node.loc.end },
+        };
+      }
     }
   }
 
   function hanldeFunctionExpression(path) {
-    if (
-      path.parentPath.node.type === "VariableDeclarator" &&
-      path.parentPath.parentPath.node.type === "VariableDeclaration"
+    if (path.parentPath.isExportDefaultDeclaration()) {
+      handleExportDefaultDeclaration();
+    } else if (
+      path.parentPath.parentPath.parentPath.isExportNamedDeclaration()
     ) {
+      handleExportNamedDeclaration();
+    } else {
+      if (
+        path.parentPath.node.type === "VariableDeclarator" &&
+        path.parentPath.parentPath.node.type === "VariableDeclaration"
+      ) {
+        handleNormal();
+      }
+    }
+
+    function handleExportDefaultDeclaration() {
+      if (isContain(path.parentPath.node, index)) {
+        node = {
+          name: "",
+          start: { ...path.parentPath.node.loc.start },
+          end: { ...path.parentPath.node.loc.end },
+        };
+      }
+    }
+
+    function handleExportNamedDeclaration() {
+      if (isContain(path.parentPath.parentPath.parentPath.node, index)) {
+        function getName() {
+          return Object.keys(path.parentPath.getBindingIdentifiers())[0];
+        }
+
+        node = {
+          name: getName(),
+          start: { ...path.parentPath.parentPath.parentPath.node.loc.start },
+          end: { ...path.parentPath.parentPath.parentPath.node.loc.end },
+        };
+      }
+    }
+
+    function handleNormal() {
       if (isContain(path.parentPath.parentPath.node, index)) {
         node = createNodeWithVariableDeclarator(
           path.parentPath.parentPath.node,
@@ -90,14 +144,6 @@ function createNodeWithVariableDeclarator(
   };
 }
 
-function createNodeWithExportNamedDeclaration(node: any): Node {
-  return {
-    name: node.declaration.id.name,
-    start: { ...node.loc.start },
-    end: { ...node.loc.end },
-  };
-}
-
 function createNodeWithFunctionDeclaration(functionDeclarationNode): Node {
   return {
     name: functionDeclarationNode.id.loc.identifierName,
@@ -105,5 +151,3 @@ function createNodeWithFunctionDeclaration(functionDeclarationNode): Node {
     end: { ...functionDeclarationNode.loc.end },
   };
 }
-
-
