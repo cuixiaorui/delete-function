@@ -34,23 +34,10 @@ export function createNodeFunctionDeclarationHandler(path, index) {
   }
 }
 
-export function handlerNodeClassMethod(path, index) {
-  const nodeHandler = new ClassMethodsHandler(path, index);
-  return nodeHandler?.handle();
-}
-
-export function handleNodeObjectMethod(path, index) {
-  // const nodeHandler = new ObjectMethodHandler(path, index);
-  // if (nodeHandler.isContain()) {
-  //   return nodeHandler.handle();
-  // }
-  return new ObjectMethodHandler(path, index);
+export function createNodeClassMethodHandler(path, index) {
+  return new ClassMethodsHandler(path, index);
 }
 
 export function createNodeObjectMethodHandler(path, index) {
-  // const nodeHandler = new ObjectMethodHandler(path, index);
-  // if (nodeHandler.isContain()) {
-  //   return nodeHandler.handle();
-  // }
   return new ObjectMethodHandler(path, index);
 }

@@ -505,6 +505,10 @@ test("Class Method", () => {
     getName(){
       return "name"
     }
+
+    setName(){
+      return "name"
+    }
   }
   `;
 
@@ -523,6 +527,7 @@ test("Class Method", () => {
     },
   });
 });
+
 
 it("export arrowFunctionExpression function and export FunctionDeclaration  ", () => {
   let index = 37;

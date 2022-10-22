@@ -5,8 +5,8 @@ import { parse } from "../parse";
 import {
   createNodeFunctionDeclarationHandler,
   createNodeFunctionExpressionHandler,
-  handlerNodeClassMethod,
   createNodeObjectMethodHandler,
+  createNodeClassMethodHandler
 } from "../nodeHandlers";
 
 interface Node {
@@ -39,7 +39,10 @@ export function getDeleteFunctionNodeJs(
     FunctionExpression: hanldeFunctionExpression,
     ArrowFunctionExpression: hanldeFunctionExpression,
     ClassMethod: (path) => {
-      node = handlerNodeClassMethod(path, index);
+      const nodeHandler = createNodeClassMethodHandler(path, index);
+      if (nodeHandler?.isContain()) {
+        node = nodeHandler?.handle();
+      }
     },
     ObjectMethod: (path) => {
       const nodeHandler = createNodeObjectMethodHandler(path, index);
