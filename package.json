@@ -2,7 +2,7 @@
   "name": "delete-function",
   "displayName": "Delete Function",
   "description": "quick delete function",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "cuixiaorui",
   "engines": {
     "vscode": "^1.72.0"
