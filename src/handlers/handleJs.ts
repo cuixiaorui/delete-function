@@ -36,8 +36,8 @@ export function getDeleteFunctionNodeJs(
 
   traverse(ast, {
     FunctionDeclaration: handleFunctionDeclaration,
-    FunctionExpression: hanldeFunctionExpression,
-    ArrowFunctionExpression: hanldeFunctionExpression,
+    FunctionExpression: handleFunctionExpression,
+    ArrowFunctionExpression: handleFunctionExpression,
     ClassMethod: (path) => {
       const nodeHandler = createNodeClassMethodHandler(path, index);
       if (nodeHandler?.isContain()) {
@@ -59,7 +59,7 @@ export function getDeleteFunctionNodeJs(
     }
   }
 
-  function hanldeFunctionExpression(path) {
+  function handleFunctionExpression(path) {
     const nodeHandler = createNodeFunctionExpressionHandler(path, index);
     if (nodeHandler?.isContain()) {
       node = nodeHandler?.handle();
