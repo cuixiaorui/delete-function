@@ -1,27 +1,14 @@
-import traverse from "@babel/traverse";
 import type { NodePath } from "@babel/traverse";
+import traverse from "@babel/traverse";
 import { FunctionDeclaration } from "@babel/types";
-import { parse } from "../parse";
 import {
+  createNodeClassMethodHandler,
   createNodeFunctionDeclarationHandler,
   createNodeFunctionExpressionHandler,
-  createNodeObjectMethodHandler,
-  createNodeClassMethodHandler
+  createNodeObjectMethodHandler
 } from "../nodeHandlers";
-
-interface Node {
-  name: string;
-  start: {
-    line: number;
-    column: number;
-    index: number;
-  };
-  end: {
-    line: number;
-    column: number;
-    index: number;
-  };
-}
+import { parse } from "../parse";
+import { Node } from './index';
 
 /**
  * return function node by index on documentText

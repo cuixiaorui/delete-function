@@ -1,0 +1,31 @@
+[package]
+name = "delete-function-vsc"
+version = "0.1.0"
+authors = ["Clover <2621869236@qq.com>"]
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dependencies]
+wasm-bindgen = "0.2.84"
+
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+console_error_panic_hook = { version = "0.1.7", optional = true }
+syn = { version = "2.0.48", features = ["extra-traits", "full"] }
+proc-macro2 = { version = "1.0.76", features = ["span-locations"] }
+serde = { version = "1.0.195", features = ["serde_derive"] }
+serde_json = "1.0.111"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.34"
+
+[profile.release]
+# Tell `rustc` to optimize for small code size.
+opt-level = "s"

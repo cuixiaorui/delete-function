@@ -6,7 +6,7 @@ export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.commands.registerCommand(commandId, () => {
     try {
       deleteFunction();
-    } catch (e) {}
+    } catch (e) { }
   });
 
   context.subscriptions.push(disposable);
