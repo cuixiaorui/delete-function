@@ -54,6 +54,7 @@
     "test:unit": "vitest --run"
   },
   "devDependencies": {
+    "@babel/types": "^7.23.6",
     "@types/babel__traverse": "^7.18.2",
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
@@ -71,6 +72,7 @@
   "dependencies": {
     "@babel/parser": "^7.19.4",
     "@babel/traverse": "^7.19.4",
-    "@vue/compiler-sfc": "^3.2.40"
+    "@vue/compiler-sfc": "^3.2.40",
+    "pkg": "link:rust-wasm/pkg"
   }
 }

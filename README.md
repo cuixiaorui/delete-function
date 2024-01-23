@@ -1,6 +1,6 @@
 # [Delete-Function](https://marketplace.visualstudio.com/items?itemName=cuixiaorui.delete-function)
 
-quick delete function that support javascript and typescript
+quick delete function that support javascript、typescript and rust
 
 ## Installation
 
@@ -10,13 +10,13 @@ quick delete function that support javascript and typescript
 
 ## Usage
 
-1. Through the Command Palette. 
+1. Through the Command Palette.
 
 ![](https://images-1252602850.cos.ap-beijing.myqcloud.com/20221013222755.png)
 
 2. Through the shortcut
 
-- default shortcut 
+- default shortcut
   - mac "cmd + r + f"
   - win "ctrl + r + f"
 
@@ -40,4 +40,4 @@ quick delete function that support javascript and typescript
 
 you can config follow above
 
-replace 'before' to you want 
+replace 'before' to you want
